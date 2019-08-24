@@ -22,7 +22,13 @@ public class ProjectManagerServiceImpl implements ProjectManagerService {
 
 	@Override
 	public ProjectManager getProjectManager(int id) {
-		return projectManagerRepository.findById(id).get();
+		ProjectManager projectManager = null;
+		try {
+			projectManager = projectManagerRepository.findById(id).get();
+		}catch(Exception e){
+			System.out.println("Error:" + e.getMessage());
+		}
+		return projectManager;
 	}
 
 	@Override
@@ -33,14 +39,14 @@ public class ProjectManagerServiceImpl implements ProjectManagerService {
 
 	@Override
 	public Response updateProjectManager(ProjectManager projectManager) {
-		// TODO Auto-generated method stub
-		return null;
+		ProjectManager updateProjectManager = projectManagerRepository.save(projectManager);
+		return Response.ok(updateProjectManager).build();
 	}
 
 	@Override
 	public Response deleteProjectManager(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		projectManagerRepository.deleteById(id);
+		return Response.ok("Borrado el registro: " + id).build();
 	}
 
 }
