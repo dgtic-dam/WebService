@@ -5,9 +5,11 @@ import java.util.List;
 import javax.transaction.Status;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.BusException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.bitmania.pmm.entities.ProjectManager;
+import mx.bitmania.pmm.exceptions.BusinessExceptions;
 import mx.bitmania.pmm.repository.ProjectManagerRepository;
 import mx.bitmania.pmm.service.ProjectManagerService;
 
@@ -27,7 +29,8 @@ public class ProjectManagerServiceImpl implements ProjectManagerService {
 		try {
 			projectManager = projectManagerRepository.findById(id).get();
 		}catch(Exception e){
-			System.out.println("Error:" + e.getMessage());
+			throw new BusinessExceptions(e.getMessage());
+			//System.out.println("Error:" + e.getMessage());
 		}
 		return projectManager;
 	}

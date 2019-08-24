@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.bitmania.pmm.entities.Project;
 import mx.bitmania.pmm.entities.ProjectManager;
+import mx.bitmania.pmm.exceptions.BusinessExceptions;
 import mx.bitmania.pmm.repository.ProjectManagerRepository;
 import mx.bitmania.pmm.repository.ProjectRepository;
 
@@ -27,7 +28,8 @@ public class ProjectServiceImpl implements mx.bitmania.pmm.service.ProjectServic
 		try {
 			project = projectRepository.findById(id).get();
 		}catch(Exception e){
-			System.out.println("Error:" + e.getMessage());
+			throw new BusinessExceptions(e.getMessage());
+			//System.out.println("Error:" + e.getMessage());
 		}
 		return project;
 	}
@@ -35,14 +37,14 @@ public class ProjectServiceImpl implements mx.bitmania.pmm.service.ProjectServic
 
 	@Override
 	public Project createProject(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+		Project savedProject = projectRepository.save(project);
+		return savedProject;
 	}
 
 	@Override
 	public Response updateProject(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+		Project updateProject = projectRepository.save(project);
+		return Response.ok(updateProject).build();
 	}
 
 	@Override
